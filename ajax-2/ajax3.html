@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX3 - External API</title>
+  </head>
+  <body>
+    <button id="button">Load Github Users</button>
+
+    <br /><br />
+    <h1>Github Users</h1>
+    <div id="users"></div>
+
+    <script>
+      document.getElementById("button").addEventListener("click", () => {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://api.github.com/users", true);
+
+        xhr.onload = function () {
+          if (this.status == 200) {
+            var users = JSON.parse(this.responseText);
+            const usersCon = document.getElementById("users");
+
+            users.forEach((i) => {
+              const { id, avatar_url, login } = i;
+              usersCon.innerHTML += `ID: ${id} <br /> <img width="70" height="70" src="${avatar_url}"/> <br/> Login: ${login}<br/><br/>`;
+            });
+          }
+        };
+
+        xhr.send();
+      });
+    </script>
+  </body>
+</html>
