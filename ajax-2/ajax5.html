@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax 2 - Local JSONt</title>
+  </head>
+  <body>
+    <button id="btn1">Get Users</button>
+    <br /><br />
+    <h1>Users</h1>
+    <div id="users"></div>
+
+    <script>
+      const button1 = document.getElementById("btn1");
+
+      button1.addEventListener("click", () => {
+        //function to load user
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "users.php", true);
+
+        xhr.onload = function () {
+          if (this.status == 200) {
+            var users = JSON.parse(this.responseText);
+            let usersCon = document.getElementById("users");
+
+            users.forEach((i) => {
+              const { name, id } = i;
+              usersCon.innerHTML += `ID: ${id} <br /> Name: ${name} <br/><br/>`;
+            });
+          }
+        };
+
+        xhr.send();
+      });
+    </script>
+  </body>
+</html>
